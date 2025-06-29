@@ -1,3 +1,5 @@
+package baekjoon.r3_gold;
+
 import java.io.*;
 import java.util.*;
 
@@ -13,7 +15,7 @@ public class BOJ_2110_공유기_설치 {
         for (int i = 1; i < N; i++) {
             if (coordinate[i] - last >= dist) {
             	cnt++;
-                last = coordinate[i];
+              last = coordinate[i];
             }
         }
         return cnt >= C;
@@ -40,9 +42,9 @@ public class BOJ_2110_공유기_설치 {
 			int mid = (left + right) /2;
 			
 			if (canInstall(mid)) {
-                result = mid;
-                left = mid + 1;  
-            } else right = mid - 1;
+            result = mid;
+            left = mid + 1;  
+      } else right = mid - 1;
 		}
 		System.out.println(result);
 	}
