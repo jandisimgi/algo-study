@@ -1,59 +1,46 @@
 import java.io.*;
 import java.util.*;
 
-public class Main
-{
-	static int N;
-	static int K;
-	
-	static int visited[] = new int[100001];
-	
-	public static void main(String[] args) throws IOException{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		String input = br.readLine();
-		String[] inputs = input.split(" ");
-		
-		N = Integer.valueOf(inputs[0]);
-		K = Integer.valueOf(inputs[1]);
-		
-		int result = bfs(N);
-		System.out.println(result);
-	}
+public class Main {
+    static final int MAX = 100000;
 
-	private static int  bfs(int node)
-	{
-		Queue<Integer> queue = new LinkedList<Integer>();
-		
-		queue.add(node);
-		int index = node;
-		int n = 0;
-		visited[index] = 1;
-		while (queue.isEmpty() == false)
-		{
-			n = queue.remove();
-			
-			if (n == K)
-			{
-				return visited[n]-1;
-			}
-			
-			if (n-1>=0 && visited[n-1] == 0)
-			{
-				visited[n-1] = visited[n]+1;
-				queue.add(n-1);
-			}
-			if (n+1 <= 100000 && visited[n+1] == 0)
-			{
-				visited[n+1] = visited[n]+1;
-				queue.add(n+1);
-			}
-			if (2*n <= 100000 && visited[2*n] == 0)
-			{
-				visited[2*n] = visited[n] + 1;
-				queue.add(2*n);
-			}
-		}
-		return -1;
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+
+        if (N == K) {
+            System.out.println(0);
+            return;
+        }
+
+        boolean visited[] = new boolean[MAX + 1];
+
+        Queue<int[]> q = new ArrayDeque<>();
+        q.offer(new int[] { 0, N });
+        visited[N] = true;
+
+        while (!q.isEmpty()) {
+            int now[] = q.remove();
+            int time = now[0];
+            int x = now[1];
+
+            int next[] = { x - 1, x + 1, x * 2 };
+
+            for (int d : next) {
+                if (d < 0 || d > MAX)
+                    continue;
+                if (visited[d])
+                    continue;
+                if (d == K) {
+                    System.out.println(time + 1);
+                    return;
+                }
+
+                visited[d] = true;
+                q.offer(new int[] { time + 1, d });
+            }
+        }
+    }
 }
